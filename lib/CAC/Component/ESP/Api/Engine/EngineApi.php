@@ -117,6 +117,26 @@ class EngineApi implements LoggerAwareInterface
      */
     public function createMailingFromTemplate($templateId, $subject, $fromName, $fromEmail, $replyTo = null, $title = null)
     {
+        return $this->createMailingFromTemplateWithReplacements($templateId, [], $subject, $fromName, $fromEmail, $replyTo = null, $title = null);
+    }
+
+    /**
+     * Create a new mailing based on an E-Ngine Template
+     *
+     * @param integer $templateId
+     * @param array   $replacements
+     * @param string  $subject
+     * @param string  $fromName
+     * @param string  $fromEmail
+     * @param string  $replyTo
+     * @param string  $title
+     *
+     * @return integer
+     *
+     * @throws EngineApiException
+     */
+    public function createMailingFromTemplateWithReplacements($templateId, $replacements, $subject, $fromName, $fromEmail, $replyTo = null, $title = null)
+    {
         if (null === $replyTo) {
             $replyTo = $fromEmail;
         }
@@ -124,10 +144,14 @@ class EngineApi implements LoggerAwareInterface
         if (null === $title) {
             $title = $subject;
         }
+        foreach ($replacements as $key => $val) {
+            $replacements[$key] = utf8_encode($val);
+        }
 
         $mailingId = $this->performRequest(
-            'Mailing_createFromTemplate',
+            'Mailing_createFromTemplateWithReplacements',
             $templateId,
+            $replacements,
             utf8_encode($title),
             utf8_encode($subject),
             $fromName,
