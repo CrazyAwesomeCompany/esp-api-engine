@@ -11,11 +11,6 @@ use Psr\Log\LoggerAwareInterface;
  * Api Client to connect to the E-Ngine ESP webservice.
  *
  * @author Crazy Awesome Company <info@crazyawesomecompany.com>
- *
- * @todo Implement `Mailinglist_getUnsubscriptionsAsCSV`
- * @todo Implement `Subscriber_getByUniqueID`
- * @todo Implement `Subscriber_sendMailingToSubscribers`
- *
  */
 class EngineApi implements LoggerAwareInterface
 {
